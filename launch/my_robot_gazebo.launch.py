@@ -63,5 +63,5 @@ def generate_launch_description():
         gazebo_node,
         spawn_robot_node,
         bridge_node,
-        rviz_node,
+        # rviz_node,
     ])
