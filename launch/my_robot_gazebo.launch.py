@@ -58,10 +58,19 @@ def generate_launch_description():
         arguments=['-d', rviz_config_path],
     )
 
+    sensor_encoder_node = Node(
+        package='robin_bringup',
+        executable='motor_encoder',
+        name='motor_encoder',
+        output='screen',
+        parameters=[{'use_sim_time': True}],
+    )
+
     return LaunchDescription([
         robot_state_publisher_node,
         gazebo_node,
         spawn_robot_node,
         bridge_node,
         # rviz_node,
+        sensor_encoder_node,
     ])
