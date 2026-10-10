@@ -28,6 +28,10 @@ def generate_launch_description():
         Command(['xacro ', urdf_path]), value_type=str
     )
 
+    world_path = os.path.join(
+        bringup_share, 'worlds', 'map_uts.sdf'
+    )
+
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -36,7 +40,7 @@ def generate_launch_description():
 
     gazebo_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(gazebo_launch_path),
-        launch_arguments={'gz_args': 'empty.sdf -r'}.items(),
+        launch_arguments={'gz_args': f'{world_path} -r'}.items(),
     )
 
     spawn_robot_node = Node(
