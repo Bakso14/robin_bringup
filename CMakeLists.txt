@@ -14,7 +14,7 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 install(
-  DIRECTORY launch config worlds
+  DIRECTORY launch config worlds models
   DESTINATION share/${PROJECT_NAME}/
 )
 

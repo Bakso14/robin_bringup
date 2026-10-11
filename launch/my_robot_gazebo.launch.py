@@ -7,6 +7,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
+from launch.actions import SetEnvironmentVariable
 
 
 def generate_launch_description():
@@ -30,6 +31,16 @@ def generate_launch_description():
 
     world_path = os.path.join(
         bringup_share, 'worlds', 'map_uts.sdf'
+    )
+
+    models_path = os.path.join(bringup_share, 'models')
+
+    gazebo_resource_path = SetEnvironmentVariable(
+        name='GZ_SIM_RESOURCE_PATH',
+        value=os.pathsep.join([
+            models_path,
+            os.environ.get('GZ_SIM_RESOURCE_PATH', '')
+        ]).rstrip(os.pathsep),
     )
 
     robot_state_publisher_node = Node(
@@ -72,6 +83,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         robot_state_publisher_node,
+        gazebo_resource_path,
         gazebo_node,
         spawn_robot_node,
         bridge_node,
